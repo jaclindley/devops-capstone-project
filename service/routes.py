@@ -13,6 +13,7 @@ from . import app  # Import Flask application
 ############################################################
 # Health Endpoint
 ############################################################
+
 @app.route("/health")
 def health():
     """Health Status"""
@@ -22,6 +23,7 @@ def health():
 ######################################################################
 # GET INDEX
 ######################################################################
+
 @app.route("/")
 def index():
     """Root URL response"""
@@ -38,6 +40,7 @@ def index():
 ######################################################################
 # CREATE A NEW ACCOUNT
 ######################################################################
+
 @app.route("/accounts", methods=["POST"])
 def create_accounts():
     """
@@ -57,9 +60,11 @@ def create_accounts():
         jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
     )
 
+
 ######################################################################
 # LIST ALL ACCOUNTS
 ######################################################################
+
 @app.route("/accounts", methods=["GET"])
 def list_accounts():
     """
@@ -70,10 +75,11 @@ def list_accounts():
     accounts = Account.all()
     # create a list of serialize() account
     account_list = [account.serialize() for account in accounts]
-    # log the number of accounts being returned in the list 
+    # log the number of accounts being returned in the list
     app.logger.info("Returning [%s] accounts", len(account_list))
     # return the list with a return code of status.HTTP_200_OK
     return jsonify(account_list), status.HTTP_200_OK
+
 
 ######################################################################
 # READ AN ACCOUNT
@@ -95,6 +101,7 @@ def get_accounts(account_id):
     # return the serialize() version of the account with a return code of status.HTTP_200_OK
     return account.serialize(), status.HTTP_200_OK
 
+
 ######################################################################
 # UPDATE AN EXISTING ACCOUNT
 ######################################################################
@@ -112,6 +119,7 @@ def update_accounts(account_id):
     account.deserialize(request.get_json())
     account.update()
     return account.serialize(), status.HTTP_200_OK
+
 
 ######################################################################
 # DELETE AN ACCOUNT
@@ -137,7 +145,6 @@ def delete_accounts(account_id):
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
 ######################################################################
-
 
 def check_content_type(media_type):
     """Checks that the media type is correct"""
