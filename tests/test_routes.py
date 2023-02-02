@@ -24,6 +24,7 @@ HTTPS_ENVIRON = {'wsgi.url_scheme': 'https'}
 ######################################################################
 #  T E S T   C A S E S
 ######################################################################
+
 class TestAccountService(TestCase):
     """Account Service Tests"""
 
@@ -140,7 +141,7 @@ class TestAccountService(TestCase):
         data = resp.get_json()
         # assert that data["name"] equals the account.name
         self.assertEqual(data["name"], account.name)
-    
+
     def test_get_account_not_found(self):
         """It should not Read an Account that is not found"""
         # send a self.client.get() request to the BASE_URL with an invalid account number (e.g., 0)
@@ -165,7 +166,7 @@ class TestAccountService(TestCase):
         # create an Account to update
         test_account = AccountFactory()
         # send a self.client.post() request to the BASE_URL with a json payload of test_account.serialize()
-        resp = self.client.post(BASE_URL,json=test_account.serialize())
+        resp = self.client.post(BASE_URL, json=test_account.serialize())
         # assert that the resp.status_code is status.HTTP_201_CREATED
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
         # UPDATE THE ACCOUNT
@@ -210,7 +211,7 @@ class TestAccountService(TestCase):
         }
         for key, value in headers.items():
             self.assertEqual(response.headers.get(key), value)
-    
+
     def test_cors_security(self):
         """It should return a CORS header"""
         response = self.client.get("/", environ_overrides=HTTPS_ENVIRON)
